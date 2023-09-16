@@ -1,0 +1,1 @@
+with pkgs; [virt-manager]
