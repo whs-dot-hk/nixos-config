@@ -54,6 +54,7 @@
               imports = [
                 # Include the results of the hardware scan.
                 #./hardware-configuration.nix
+                nixos-generators.nixosModules.qcow
               ];
 
               # Use the systemd-boot EFI boot loader.
