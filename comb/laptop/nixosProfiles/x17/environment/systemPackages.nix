@@ -1,1 +1,4 @@
-with pkgs; [virt-manager]
+with pkgs; [
+  virt-manager
+  virtiofsd
+]
