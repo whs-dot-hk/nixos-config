@@ -57,6 +57,11 @@
                 nixos-generators.nixosModules.qcow
               ];
 
+              nix.settings.experimental-features = [
+                "flakes"
+                "nix-command"
+              ];
+
               # Use the systemd-boot EFI boot loader.
               #boot.loader.systemd-boot.enable = true;
               #boot.loader.efi.canTouchEfiVariables = true;
@@ -120,6 +125,7 @@
               #   wget
               # ];
               environment.systemPackages = with pkgs; [
+                git
                 vim
               ];
 
