@@ -1,7 +1,7 @@
 {
   inputs."user.js".url = "github:arkenfox/user.js";
   inputs.disko.url = "github:nix-community/disko";
-  inputs.hive.url = "github:whs-dot-hk/hive/test5";
+  inputs.hive.url = "github:whs-dot-hk/hive/test6";
   inputs.home-manager.url = "github:nix-community/home-manager";
   inputs.nixos-generators.url = "github:nix-community/nixos-generators";
   inputs.nixpkgs-mozilla.url = "github:mozilla/nixpkgs-mozilla";

@@ -1,4 +1,6 @@
-{
+let
+  inherit (config._module.args) pkgs;
+in {
   enable = true;
   package = pkgs.latest.firefox-nightly-bin;
   profiles."0".extraConfig = builtins.readFile (inputs."user.js" + /user.js);
