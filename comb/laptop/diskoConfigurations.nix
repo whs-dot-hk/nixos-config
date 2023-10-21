@@ -1,6 +1,6 @@
 {
   x17 = {
-    disk = {
+    disko.devices.disk = {
       nvme1n1 = {
         type = "disk";
         device = "/dev/nvme1n1";
