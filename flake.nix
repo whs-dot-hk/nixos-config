@@ -38,7 +38,6 @@
           ];
     }
     {
-      diskoConfigurations = hive.collect self "diskoConfigurations";
       nixosConfigurations = hive.collect self "nixosConfigurations";
     }
     {
