@@ -2,7 +2,7 @@
   inputs."user.js".url = "github:arkenfox/user.js";
   inputs.disko.url = "github:nix-community/disko";
   inputs.fenix.url = "github:nix-community/fenix";
-  inputs.hive.url = "github:whs-dot-hk/hive/test6";
+  inputs.hive.url = "github:divnix/hive";
   inputs.home-manager.url = "github:nix-community/home-manager";
   inputs.nixos-generators.url = "github:nix-community/nixos-generators";
   inputs.nixpkgs-mozilla.url = "github:mozilla/nixpkgs-mozilla";

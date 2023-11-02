@@ -271,16 +271,15 @@
         "std": "std"
       },
       "locked": {
-        "lastModified": 1696308024,
-        "narHash": "sha256-vVGbhwlGjPI1RgtUK6Z+MqdL6sKWt5QLL5UdhpFXjkI=",
-        "owner": "whs-dot-hk",
+        "lastModified": 1698675159,
+        "narHash": "sha256-RnlNcSArIfYqNF9KqMyFbWZcodqDgtnCMod01fT8ybc=",
+        "owner": "divnix",
         "repo": "hive",
-        "rev": "2e7b0b4939eb3a597d50ce98c640c1dcc031a3fa",
+        "rev": "0a8ce17efe6c448feb7d209459dcd7d14a50797f",
         "type": "github"
       },
       "original": {
-        "owner": "whs-dot-hk",
-        "ref": "test6",
+        "owner": "divnix",
         "repo": "hive",
         "type": "github"
       }
