@@ -1,7 +1,7 @@
 {
   home.file.".config/smplayer/smplayer.ini".text = ''
     [advanced]
-    mplayer_additional_options=--hwdec=nvdec-copy --vo=gpu-next
+    mplayer_additional_options=--hwdec=nvdec --vo=gpu-next
     use_mplayer_window=true
     [default_gui]
     ; Display remaining time instead of total time

@@ -1,0 +1,11 @@
+[package]
+name = "nixos-config"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0.75"
+genco = { git = "https://github.com/whs-dot-hk/genco.git", branch = "test", version = "0.17.7" }
+honey = { git = "https://github.com/whs-dot-hk/honey.git", version = "0.1.0" }

@@ -3,7 +3,7 @@ let
   inherit (inputs) fenix;
 in
   with pkgs; [
-    (wrapMpv (mpv-unwrapped.override {ffmpeg_5 = ffmpeg_5-full;}) {})
+    (wrapMpv (mpv-unwrapped.override {ffmpeg = ffmpeg_6-full;}) {})
     alejandra
     borgbackup
     borgmatic

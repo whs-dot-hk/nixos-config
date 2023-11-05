@@ -30,6 +30,7 @@
           [
             (functions "hardwareProfiles")
             (functions "homeProfiles")
+            (functions "nixosModules")
             (functions "nixosProfiles")
             (pkgs "pkgs")
             diskoConfigurations
