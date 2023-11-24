@@ -7,6 +7,7 @@ in
     alejandra
     borgbackup
     borgmatic
+    brasero
     cargo-expand
     fenix.packages.default.toolchain
     gcc

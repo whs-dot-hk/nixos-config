@@ -113,11 +113,13 @@
               #     tree
               #   ];
               # };
-              users.users.packer = {
+              users.users.nixos = {
                 extraGroups = ["wheel"];
-                initialPassword = "packer";
+                initialPassword = "nixos";
                 isNormalUser = true;
               };
+
+              users.extraGroups.docker.members = ["nixos"];
 
               # List packages installed in system profile. To search, run:
               # $ nix search wget
@@ -126,7 +128,10 @@
               #   wget
               # ];
               environment.systemPackages = with pkgs; [
+                cilium-cli
                 git
+                kind
+                kubectl
                 vim
               ];
 
@@ -139,6 +144,7 @@
               # };
 
               # List services that you want to enable:
+              virtualisation.docker.enable = true;
 
               # Enable the OpenSSH daemon.
               services.openssh.enable = true;
@@ -166,4 +172,15 @@
         };
       };
     };
+
+  nixConfig = {
+    extra-substituters = [
+      "https://nix-community.cachix.org"
+      "https://numtide.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="
+    ];
+  };
 }
