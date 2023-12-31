@@ -6,7 +6,7 @@
   inputs.home-manager.url = "github:nix-community/home-manager";
   inputs.nixos-generators.url = "github:nix-community/nixos-generators";
   inputs.nixpkgs-mozilla.url = "github:mozilla/nixpkgs-mozilla";
-  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+  inputs.nixpkgs.url = "github:nixos/nixpkgs";
   inputs.nur.url = "github:nix-community/nur";
   inputs.std.url = "github:divnix/std";
 
