@@ -15,12 +15,61 @@
   outputs = {
     hive,
     nixos-generators,
+    nixpkgs,
     self,
     std,
     ...
-  } @ inputs:
+  } @ inputs: let
+    inherit (nixpkgs) lib;
+    inherit (std.inputs) haumea;
+    load = {
+      inputs,
+      cell,
+      src,
+    }: {
+      config,
+      options,
+      ...
+    }: let
+      cr = cell.__cr ++ [(baseNameOf src)];
+      file = "${self.outPath}#${lib.concatStringsSep "/" cr}";
+
+      defaultWith = import (haumea + /src/loaders/__defaultWith.nix) {inherit lib;};
+      loader = let i = {inherit inputs cell config options;}; in defaultWith (scopedImport i) i;
+    in
+      if lib.pathIsDirectory src
+      then
+        lib.setDefaultModuleLocation file (haumea.lib.load {
+          inherit src;
+          loader = haumea.lib.loaders.scoped;
+          transformer = with haumea.lib.transformers; [
+            liftDefault
+            #(hoistLists "_imports" "imports")
+          ];
+          inputs = {inherit inputs cell config options;};
+        })
+      else lib.setDefaultModuleLocation file (loader src);
+
+    findLoad = {
+      inputs,
+      cell,
+      block,
+    }:
+      with builtins;
+        lib.mapAttrs'
+        (n: _:
+          lib.nameValuePair
+          (lib.removeSuffix ".nix" n)
+          (load {
+            inherit inputs cell;
+            src = block + /${n};
+          }))
+        (removeAttrs (readDir block) ["default.nix"]);
+
+    inputs' = lib.recursiveUpdate inputs {hive.findLoad = findLoad;};
+  in
     hive.growOn {
-      inherit inputs;
+      inputs = inputs';
       cellsFrom = ./comb;
       cellBlocks =
         #
