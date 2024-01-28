@@ -1,5 +1,5 @@
 ```sh
-sudo nixos-rebuild switch --flake .#laptop-x17 --impure
+sudo nixos-rebuild switch --flake .#laptop-x17 --impure --max-jobs 2 --cores 9 --show-trace
 ```
 # Virtiofs
 ```yaml
