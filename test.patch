@@ -1,22 +1,61 @@
-diff --git a/kernel/rcu/tree_plugin.h b/kernel/rcu/tree_plugin.h
-index 41021080ad25..72474d8ec180 100644
---- a/kernel/rcu/tree_plugin.h
-+++ b/kernel/rcu/tree_plugin.h
-@@ -406,7 +406,7 @@ void __rcu_read_lock(void)
- 		WRITE_ONCE(current->rcu_read_unlock_special.b.need_qs, true);
- 	barrier();  /* critical section after entry code. */
- }
--EXPORT_SYMBOL_GPL(__rcu_read_lock);
-+EXPORT_SYMBOL(__rcu_read_lock);
+diff --git a/kernel-open/common/inc/nv-linux.h b/kernel-open/common/inc/nv-linux.h
+index 893d9317..e6e4b2f7 100644
+--- a/kernel-open/common/inc/nv-linux.h
++++ b/kernel-open/common/inc/nv-linux.h
+@@ -2077,4 +2077,21 @@ typedef enum
+ #define NV_EXPORT_SYMBOL(symbol)        EXPORT_SYMBOL_GPL(symbol)
+ #define NV_CHECK_EXPORT_SYMBOL(symbol)  NV_IS_EXPORT_SYMBOL_PRESENT_##symbol
  
- /*
-  * Preemptible RCU implementation for rcu_read_unlock().
-@@ -431,7 +431,7 @@ void __rcu_read_unlock(void)
- 		WARN_ON_ONCE(rrln < 0 || rrln > RCU_NEST_PMAX);
- 	}
- }
--EXPORT_SYMBOL_GPL(__rcu_read_unlock);
-+EXPORT_SYMBOL(__rcu_read_unlock);
++static inline int nv_pfn_valid(unsigned long pfn)
++{
++        struct mem_section *ms;
++
++        if (PHYS_PFN(PFN_PHYS(pfn)) != pfn)
++                return 0;
++
++        if (pfn_to_section_nr(pfn) >= NR_MEM_SECTIONS)
++                return 0;
++
++        ms = __pfn_to_section(pfn);
++        if (!valid_section(ms))
++                return 0;
++
++        return early_section(ms) || pfn_section_valid(ms, pfn);
++}
++
+ #endif  /* _NV_LINUX_H_ */
+diff --git a/kernel-open/nvidia/nv-mmap.c b/kernel-open/nvidia/nv-mmap.c
+index 7c85cab1..2531be21 100644
+--- a/kernel-open/nvidia/nv-mmap.c
++++ b/kernel-open/nvidia/nv-mmap.c
+@@ -582,7 +582,7 @@ int nvidia_mmap_helper(
+             //
+             if ((nv_get_numa_status(nvl) == NV_NUMA_STATUS_ONLINE) &&
+                 !IS_REG_OFFSET(nv, access_start, access_len) &&
+-                (pfn_valid(PFN_DOWN(mmap_start))))
++                (nv_pfn_valid(PFN_DOWN(mmap_start))))
+             {
+                 ret = nvidia_mmap_numa(vma, mmap_context);
+                 if (ret)
+diff --git a/kernel-open/nvidia/os-mlock.c b/kernel-open/nvidia/os-mlock.c
+index ebb498bd..d8f3ae5b 100644
+--- a/kernel-open/nvidia/os-mlock.c
++++ b/kernel-open/nvidia/os-mlock.c
+@@ -113,7 +113,7 @@ static NV_STATUS get_io_pages(struct vm_area_struct *vma,
+     for (i = 0; i < page_count; i++)
+     {
+         if ((nv_follow_pfn(vma, (start + (i * PAGE_SIZE)), &pfn) < 0) ||
+-            (!pfn_valid(pfn)))
++            (!nv_pfn_valid(pfn)))
+         {
+             rmStatus = NV_ERR_INVALID_ADDRESS;
+             break;
+@@ -187,7 +187,7 @@ NV_STATUS NV_API_CALL os_lookup_user_io_memory(
+         goto done;
+     }
  
- /*
-  * Advance a ->blkd_tasks-list pointer to the next entry, instead
+-    if (pfn_valid(pfn))
++    if (nv_pfn_valid(pfn))
+     {
+         rmStatus = get_io_pages(vma, start, page_count, (struct page **)result_array);
+         if (rmStatus == NV_OK)

@@ -1,1 +1,1 @@
-with config._module.args.pkgs; linux_testing
+with config._module.args.pkgs; linuxPackages_testing
