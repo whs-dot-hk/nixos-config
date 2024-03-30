@@ -27,15 +27,16 @@
       cell,
       src,
     }: {
-      config,
-      options,
+      pkgs,
+      mytest,
       ...
-    }: let
+    } @ args: let
       cr = cell.__cr ++ [(baseNameOf src)];
       file = "${self.outPath}#${lib.concatStringsSep "/" cr}";
 
+      inputs' = args // {inherit inputs cell;};
       defaultWith = import (haumea + /src/loaders/__defaultWith.nix) {inherit lib;};
-      loader = let i = {inherit inputs cell config options;}; in defaultWith (scopedImport i) i;
+      loader = defaultWith (scopedImport inputs') inputs';
     in
       if lib.pathIsDirectory src
       then
@@ -46,7 +47,7 @@
             liftDefault
             #(hoistLists "_imports" "imports")
           ];
-          inputs = {inherit inputs cell config options;};
+          inputs = inputs';
         })
       else lib.setDefaultModuleLocation file (loader src);
 

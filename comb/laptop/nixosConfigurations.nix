@@ -20,6 +20,7 @@ in
             cell.nixosModules.x17
             cell.nixosProfiles.x17
             disko.nixosModules.disko
+            #{config._module.args.mytest = "test";}
         ];
     };
 }
